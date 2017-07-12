@@ -2,7 +2,7 @@
 
 FROM ubuntu:14.04
 
-MAINTAINER Mobile Builds Eng "mobile-builds-eng@uber.com"
+MAINTAINER Mobile Builds Eng "deepankar.bhardwaj@gmail.com"
 
 # Sets language to UTF8 : this works in pretty much all cases
 ENV LANG en_US.UTF-8
@@ -64,12 +64,12 @@ RUN rm -rf /var/lib/apt/lists/*
 RUN apt-get clean
 
 # Install Android SDK
-RUN wget https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz
-RUN tar -xvzf android-sdk_r24.4.1-linux.tgz
+RUN wget https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip
+RUN unzip android-sdk_r24.4.1-linux.tgz -d android-sdk-linux
 RUN mv android-sdk-linux /usr/local/android-sdk
-RUN rm android-sdk_r24.4.1-linux.tgz
+RUN rm sdk-tools-linux-3859397.zip
 
-ENV ANDROID_COMPONENTS platform-tools,android-23,build-tools-23.0.2,build-tools-24.0.0
+ENV ANDROID_COMPONENTS platform-tools,android-25,build-tools-25.0.3
 
 # Install Android tools
 RUN echo y | /usr/local/android-sdk/tools/android update sdk --filter "${ANDROID_COMPONENTS}" --no-ui -a
@@ -88,8 +88,7 @@ ENV JENKINS_HOME $HOME
 ENV PATH ${INFER_HOME}/bin:${PATH}
 ENV PATH $PATH:$ANDROID_SDK_HOME/tools
 ENV PATH $PATH:$ANDROID_SDK_HOME/platform-tools
-ENV PATH $PATH:$ANDROID_SDK_HOME/build-tools/23.0.2
-ENV PATH $PATH:$ANDROID_SDK_HOME/build-tools/24.0.0
+ENV PATH $PATH:$ANDROID_SDK_HOME/build-tools/25.0.3
 ENV PATH $PATH:$ANDROID_NDK_HOME
 
 # Export JAVA_HOME variable
